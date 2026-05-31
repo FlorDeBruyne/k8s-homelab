@@ -14,5 +14,8 @@ spec:
         kind: HelmRepository
         name: metrics-server-repo
         namespace: metrics-server-system
+  values:
+    args:
+      - --kubelet-insecure-tls
   install:
     createNamespace: true
