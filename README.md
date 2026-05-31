@@ -13,13 +13,15 @@ GitOps-managed Kubernetes homelab cluster running on bare-metal HP ProDesk machi
 
 ## Stack
 
-| Component       | Purpose                        |
-|-----------------|-------------------------------|
-| Kubernetes 1.32 | Container orchestration        |
-| Cilium          | CNI (VXLAN mode)               |
-| Longhorn        | Distributed block storage      |
-| ingress-nginx   | Ingress controller             |
-| FluxCD          | GitOps continuous delivery     |
+| Component             | Purpose                        |
+|-----------------------|-------------------------------|
+| Kubernetes 1.32       | Container orchestration        |
+| Cilium                | CNI (VXLAN mode)               |
+| Longhorn              | Distributed block storage      |
+| ingress-nginx         | Ingress controller             |
+| FluxCD                | GitOps continuous delivery     |
+| kube-prometheus-stack | Metrics, alerting, dashboards  |
+| metrics-server        | Resource metrics (CPU/MEM)     |
 
 ## Repository Structure
 
@@ -28,10 +30,12 @@ k8s-homelab/
 ├── cluster/homelab/        # FluxCD entry point
 │   └── flux-system/        # FluxCD self-management
 ├── infrastructure/         # Core cluster dependencies
-│   └── longhorn/           # Distributed storage
-│   └── ingress-nginx/      # Ingress controller
-├── monitoring/             # Prometheus, Grafana (planned)
-└── apps/                   # Workloads (planned)
+│   ├── longhorn/           # Distributed block storage
+│   ├── ingress-nginx/      # Ingress controller
+│   └── metrics-server/     # Resource metrics
+├── monitoring/             # Prometheus, Grafana
+│   └── kube-prometheus-stack/
+└── apps/                   # Workloads
 ```
 
 ## Prerequisites
@@ -57,9 +61,12 @@ After bootstrapping, Flux automatically reconciles all resources defined in this
 
 ## Accessing Services
 
-| Service      | URL                              |
-|--------------|----------------------------------|
-| Longhorn UI  | http://192.168.100.129:30080     |
+| Service      | URL                                  |
+|--------------|--------------------------------------|
+| Longhorn UI  | http://longhorn.homelab.local:30080  |
+| Grafana      | http://grafana.homelab.local:30080   |
+
+> DNS records are managed via Pi-hole local DNS. Ingress runs on NodePort 30080.
 
 ## Infrastructure
 
