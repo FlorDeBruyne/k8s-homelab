@@ -7,9 +7,10 @@ metadata:
 spec:
   ingressClassName: nginx
   rules:
-    - http:
+    - host: grafana.homelab.local
+      http:
         paths:
-          - path: /grafana
+          - path: /
             pathType: Prefix
             backend:
               service:

@@ -7,9 +7,10 @@ metadata:
 spec:
   ingressClassName: nginx
   rules:
-    - http:
+    - host: longhorn.homelab.local
+      http:
         paths:
-          - path: /longhorn
+          - path: /
             pathType: Prefix
             backend:
               service:
