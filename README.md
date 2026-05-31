@@ -22,26 +22,29 @@ GitOps-managed Kubernetes homelab cluster running on bare-metal HP ProDesk machi
 | FluxCD                | GitOps continuous delivery     |
 | kube-prometheus-stack | Metrics, alerting, dashboards  |
 | metrics-server        | Resource metrics (CPU/MEM)     |
+| SOPS + Age            | Secrets encryption             |
 
 ## Repository Structure
 
 ```
 k8s-homelab/
-├── cluster/homelab/        # FluxCD entry point
-│   └── flux-system/        # FluxCD self-management
-├── infrastructure/         # Core cluster dependencies
-│   ├── longhorn/           # Distributed block storage
-│   ├── ingress-nginx/      # Ingress controller
-│   └── metrics-server/     # Resource metrics
-├── monitoring/             # Prometheus, Grafana
-│   └── kube-prometheus-stack/
-└── apps/                   # Workloads
+├── .sops.yaml                  # SOPS encryption config
+├── cluster/homelab/            # FluxCD entry point
+│   └── flux-system/            # FluxCD self-management + SOPS patch
+├── infrastructure/             # Core cluster dependencies
+│   ├── longhorn/               # Distributed block storage (~1TB per node)
+│   ├── ingress-nginx/          # Ingress controller (NodePort 30080/30443)
+│   └── metrics-server/         # Resource metrics
+├── monitoring/                 # Observability
+│   └── kube-prometheus-stack/  # Prometheus + Grafana
+└── apps/                       # Workloads
 ```
 
 ## Prerequisites
 
 - FluxCD CLI installed
 - `kubectl` configured with cluster access
+- `age` and `sops` installed
 - GitHub personal access token with `repo` scope
 
 ## Bootstrap
@@ -57,7 +60,27 @@ flux bootstrap github \
   --personal
 ```
 
-After bootstrapping, Flux automatically reconciles all resources defined in this repository.
+After bootstrapping, create the SOPS Age secret in the cluster:
+
+```bash
+age-keygen -o age.agekey
+cat age.agekey | kubectl create secret generic sops-age \
+  --namespace=flux-system \
+  --from-file=age.agekey=/dev/stdin
+rm age.agekey
+```
+
+> Store the Age private key somewhere safe (e.g. a password manager). It cannot be recovered if lost.
+
+## Secrets
+
+Secrets are encrypted with SOPS + Age before committing. To encrypt a secret:
+
+```bash
+sops --encrypt secret.yaml > secret.enc.yaml
+```
+
+Never commit unencrypted secret files. Flux automatically decrypts them during reconciliation.
 
 ## Accessing Services
 
