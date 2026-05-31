@@ -14,5 +14,8 @@ spec:
         kind: HelmRepository
         name: longhorn-repo
         namespace: longhorn-system
+  values:
+    defaultSettings:
+      defaultDataPath: /mnt/longhorn/
   install:
     createNamespace: true
