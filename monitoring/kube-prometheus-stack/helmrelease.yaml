@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: kube-prometheus-stack
-      version: v0.91.0
+      version: 0.91.0
       sourceRef:
         kind: HelmRepository
         name: monitoring-repo
