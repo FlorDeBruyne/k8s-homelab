@@ -6,6 +6,7 @@ resources:
   - gotk-sync.yaml
   - infrastructure-sync.yaml
   - monitoring-sync.yaml
+  - apps-sync.yaml
 patches:
   - path: sops-patch.yaml
     target:
