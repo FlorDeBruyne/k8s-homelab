@@ -1,9 +1,0 @@
----
-apiVersion: source.toolkit.fluxcd.io/v1
-kind: HelmRepository
-metadata:
-  name: postgres-repo
-  namespace: open-wearables
-spec:
-  url: https://charts.bitnami.com/bitnami
-  interval: 1h
