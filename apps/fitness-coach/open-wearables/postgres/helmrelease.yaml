@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: postgresql
-      version: v18.7.0
+      version: 18.7.0
       sourceRef:
         kind: HelmRepository
         name: postgres-repo
