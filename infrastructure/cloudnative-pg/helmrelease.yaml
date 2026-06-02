@@ -1,0 +1,18 @@
+---
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: HelmRelease
+metadata:
+  name: cloudnative-pg-release
+  namespace: cloudnative-pg-system
+spec:
+  interval: 10m
+  chart:
+    spec:
+      chart: cloudnative-pg
+      version: 0.28.2
+      sourceRef:
+        kind: HelmRepository
+        name: cloudnative-pg-repo
+        namespace: cloudnative-pg-system
+  install:
+    createNamespace: true
