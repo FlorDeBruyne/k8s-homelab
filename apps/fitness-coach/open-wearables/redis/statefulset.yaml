@@ -17,6 +17,8 @@ spec:
         app: redis-service
     spec:
       terminationGracePeriodSeconds: 10
+      securityContext:
+        fsGroup: 999
       containers:
         - name: redis
           image: redis:8
