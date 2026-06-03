@@ -6,6 +6,6 @@ metadata:
   namespace: open-wearables
 spec:
   name: svix
-  owner: open_wearables
+  owner: open-wearables
   cluster:
     name: postgres-cluster
