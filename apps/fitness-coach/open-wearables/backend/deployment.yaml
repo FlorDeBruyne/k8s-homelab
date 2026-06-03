@@ -18,7 +18,7 @@ spec:
       containers:
         - name: backend
           image: ghcr.io/flordebruyne/open-wearables:latest
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           ports:
             - containerPort: 8000
               protocol: TCP
