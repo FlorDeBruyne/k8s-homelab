@@ -30,6 +30,7 @@ spec:
     - metadata:
         name: redis-volume
       spec:
+        accessModes: [ "ReadWriteOnce" ]
         storageClassName: "longhorn"
         resources:
           requests:
