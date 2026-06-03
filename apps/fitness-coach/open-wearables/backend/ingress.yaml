@@ -3,7 +3,7 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: backend-ingress
-  namespace: backend-system
+  namespace: open-wearables
 spec:
   ingressClassName: nginx
   rules:
@@ -14,6 +14,6 @@ spec:
             pathType: Prefix
             backend:
               service:
-                name: backend-api
+                name: backend-service
                 port:
                   number: 8000
