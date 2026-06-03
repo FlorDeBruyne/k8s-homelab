@@ -1,0 +1,35 @@
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: redis
+spec:
+  selector:
+    matchLabels:
+      app: redis-service
+  serviceName: redis
+  replicas: 1
+  minReadySeconds: 3
+  template:
+    metadata:
+      labels:
+        app: redis-service
+    spec:
+      terminationGracePeriodSeconds: 10
+      containers:
+        - name: redis
+          image: redis:8
+          ports:
+            - containerPort: 6379
+              name: redis
+          volumeMounts:
+            - mountPath: /data
+              name: redis-volume
+  volumeClaimTemplates:
+    - metadata:
+        name: redis-volume
+      spec:
+        storageClassName: "longhorn"
+        resources:
+          requests:
+            storage: 25Gi
