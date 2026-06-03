@@ -31,7 +31,7 @@ spec:
             - name: SVIX_QUEUE_TYPE
               value: "redis"
             - name: SVIX_REDIS_DSN
-              value: "redis://redis-service.open-wearables.svc.cluster.local:6379/1"
+              value: "redis-service://redis-service.open-wearables.svc.cluster.local:6379/1"
             - name: SVIX_CACHE_TYPE
               value: "redis"
             - name: SVIX_JWT_SECRET
