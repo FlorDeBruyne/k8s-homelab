@@ -4,3 +4,4 @@ kind: Kustomization
 resources:
   - cluster.yaml
   - secrets.sops.yaml
+  - database.yaml

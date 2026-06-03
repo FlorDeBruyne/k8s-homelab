@@ -1,0 +1,11 @@
+---
+apiVersion: postgresql.cnpg.io/v1
+kind: Database
+metadata:
+  name: svix-db
+  namespace: open-wearables
+spec:
+  name: svix
+  owner: open_wearables
+  cluster:
+    name: postgres-cluster
