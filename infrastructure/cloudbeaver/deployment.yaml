@@ -22,6 +22,9 @@ spec:
           ports:
             - containerPort: 8978
               name: cloudbeaver
+          env:
+            - name: CB_SERVER_URL
+              value: "http://cloudbeaver.homelab.local:30080"
       volumes:
         - name: cloudbeaver-workspace
           persistentVolumeClaim:
