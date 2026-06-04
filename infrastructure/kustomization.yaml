@@ -6,3 +6,4 @@ resources:
   - ingress-nginx/
   - metrics-server/
   - cloudnative-pg/
+  - cloudbeaver/
