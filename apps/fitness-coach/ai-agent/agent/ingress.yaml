@@ -23,13 +23,15 @@ kind: Ingress
 metadata:
   name: agent-ingress-ip
   namespace: ai-agent
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
 spec:
   ingressClassName: nginx
   rules:
     - http:
         paths:
-          - path: /agent-api
-            pathType: Prefix
+          - path: /agent-api(/|$)(.*)
+            pathType: ImplementationSpecific
             backend:
               service:
                 name: agent-service
