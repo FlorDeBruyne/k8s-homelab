@@ -1,0 +1,31 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cloudbeaver
+  namespace: cloudbeaver-system
+spec:
+  selector:
+    matchLabels:
+      app: cloudbeaver-service
+  replicas: 1
+  minReadySeconds: 3
+  template:
+    metadata:
+      labels:
+        app: cloudbeaver-service
+    spec:
+      terminationGracePeriodSeconds: 10
+      containers:
+        - name: cloudbeaver
+          image: dbeaver/cloudbeaver:latest
+          ports:
+            - containerPort: 8978
+              name: cloudbeaver
+          env:
+            - name: PROXY_TYPE
+              value: "nginx"
+      volumes:
+        - name: cloudbeaver-workspace
+          persistentVolumeClaim:
+            claimName: cloudbeaver-pvc

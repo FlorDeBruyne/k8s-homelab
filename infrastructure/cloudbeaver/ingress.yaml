@@ -1,0 +1,19 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: cloudbeaver-ingress
+  namespace: cloudbeaver-system
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: cloudbeaver.homelab.local
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: cloudbeaver-service
+                port:
+                  number: 8978
