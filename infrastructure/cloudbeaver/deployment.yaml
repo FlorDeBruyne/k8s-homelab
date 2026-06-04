@@ -22,9 +22,6 @@ spec:
           ports:
             - containerPort: 8978
               name: cloudbeaver
-          env:
-            - name: PROXY_TYPE
-              value: "nginx"
       volumes:
         - name: cloudbeaver-workspace
           persistentVolumeClaim:
