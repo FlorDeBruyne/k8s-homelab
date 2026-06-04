@@ -1,0 +1,19 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: flower-ingress
+  namespace: open-wearables
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: flower.open-wearables.homelab.local
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: flower-service
+                port:
+                  number: 5555

@@ -1,0 +1,29 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: flower
+  namespace: open-wearables
+  labels:
+    app: flower
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: flower-service
+  template:
+    metadata:
+      labels:
+        app: flower-service
+    spec:
+      containers:
+        - name: flower
+          image: ghcr.io/flordebruyne/open-wearables:latest
+          imagePullPolicy: Always
+          command: ["/bin/sh", "-c", "scripts/start/flower.sh"]
+          ports:
+            - containerPort: 5555
+              name: flower
+          envFrom:
+            - secretRef:
+                name: backend-secret

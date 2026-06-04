@@ -8,3 +8,5 @@ resources:
   - svix/
   - backend/
   - celery/
+  - flower/
+  - frontend/

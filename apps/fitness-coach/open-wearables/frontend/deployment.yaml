@@ -1,0 +1,25 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend
+  namespace: open-wearables
+  labels:
+    app: frontend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: frontend-service
+  template:
+    metadata:
+      labels:
+        app: frontend-service
+    spec:
+      containers:
+        - name: frontend
+          image: ghcr.io/flordebruyne/open-wearables-frontend:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 3000
+              name: frontend
