@@ -26,4 +26,4 @@ spec:
           command: ["/bin/sh", "-c", "scripts/start/app.sh"]
           envFrom:
             - secretRef:
-                name: backend-secret
+                name: agent-secret
