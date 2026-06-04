@@ -1,0 +1,29 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: agent
+  namespace: ai-agent
+  labels:
+    app: agent
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: agent-service
+  template:
+    metadata:
+      labels:
+        app: agent-service
+    spec:
+      containers:
+        - name: agent
+          image: ghcr.io/flordebruyne/fitness-coach-agent:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 11434
+              protocol: TCP
+          command: ["/bin/sh", "-c", "scripts/start/app.sh"]
+          envFrom:
+            - secretRef:
+                name: backend-secret
