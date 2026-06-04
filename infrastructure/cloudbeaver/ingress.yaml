@@ -4,6 +4,10 @@ kind: Ingress
 metadata:
   name: cloudbeaver-ingress
   namespace: cloudbeaver-system
+  annotations:
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "3600"
+    nginx.ingress.kubernetes.io/proxy-send-timeout: "3600"
+    nginx.ingress.kubernetes.io/proxy-body-size: "50m"
 spec:
   ingressClassName: nginx
   rules:
