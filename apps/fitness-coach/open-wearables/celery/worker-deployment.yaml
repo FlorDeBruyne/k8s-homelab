@@ -1,0 +1,26 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: celery-worker
+  namespace: open-wearables
+  labels:
+    app: celery-worker
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: celery-worker-service
+  template:
+    metadata:
+      labels:
+        app: celery-worker-service
+    spec:
+      containers:
+        - name: celery-worker
+          image: ghcr.io/flordebruyne/open-wearables:latest
+          imagePullPolicy: Always
+          command: ["/bin/sh", "-c", "scripts/start/worker.sh"]
+          envFrom:
+            - secretRef:
+                name: backend-secret
