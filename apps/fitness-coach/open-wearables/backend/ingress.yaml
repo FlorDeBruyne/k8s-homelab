@@ -27,6 +27,10 @@ kind: Ingress
 metadata:
   name: backend-ingress-ip
   namespace: open-wearables
+  annotations:
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "3600"
+    nginx.ingress.kubernetes.io/proxy-send-timeout: "3600"
+    nginx.ingress.kubernetes.io/proxy-body-size: "0m"
 spec:
   ingressClassName: nginx
   rules:
