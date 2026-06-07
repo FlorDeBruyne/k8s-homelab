@@ -26,4 +26,4 @@ spec:
           command: ["/bin/sh", "-c", "scripts/start/app.sh"]
           envFrom:
             - secretRef:
-                name: agent-secret
+                name: ai-agent-secret
