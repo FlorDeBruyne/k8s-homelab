@@ -20,7 +20,7 @@ spec:
         - name: telegram-bot
           image: ghcr.io/flordebruyne/fitness-coach-agent:latest
           imagePullPolicy: Always
-          command: ["/bin/sh", "-c", "scripts/start/telegram-bot.sh"]
+          command: ["/bin/sh", "-c", "scripts/start/telegram_bot.sh"]
           envFrom:
             - secretRef:
                 name: ai-agent-secret
