@@ -1,0 +1,25 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: telegram-bot
+  namespace: ai-agent
+  labels:
+    app: telegram-bot
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: telegram-bot
+  template:
+    metadata:
+      labels:
+        app: telegram-bot
+    spec:
+      containers:
+        - name: telegram-bot
+          image: ghcr.io/flordebruyne/fitness-coach-agent:latest
+          imagePullPolicy: Always
+          command: ["/bin/sh", "-c", "scripts/start/telegram_bot.sh"]
+          envFrom:
+            - secretRef:
