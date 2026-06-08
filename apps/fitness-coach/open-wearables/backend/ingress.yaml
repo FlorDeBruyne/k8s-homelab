@@ -47,7 +47,7 @@ spec:
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: backend-ingress-ip
+  name: backend-domain
   namespace: open-wearables
   annotations:
     nginx.ingress.kubernetes.io/proxy-read-timeout: "3600"
