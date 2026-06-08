@@ -91,7 +91,7 @@ Secrets are encrypted with SOPS + Age before committing. The `apps-sync.yaml` an
 To edit an encrypted secret:
 
 ```bash
-sops path/to/secret.sops.yaml
+sops path/to/secrets.sops.yaml
 ```
 
 SOPS will decrypt, open your `$EDITOR`, and re-encrypt on save. Never commit unencrypted secret files.
