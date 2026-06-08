@@ -19,7 +19,7 @@ spec:
       containers:
         - name: cloudflared
           image: cloudflare/cloudflared:latest
-          command: ["cloudflared", "tunnel", "--no-autoupdate","run"]
+          command: ["cloudflared", "tunnel", "--no-autoupdate", "--protocol", "http2", "run"]
           envFrom:
             - secretRef:
                 name: cloudflared-secret
