@@ -1,0 +1,25 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cloudflared
+  namespace: cloudflared-system
+  labels:
+    app: cloudflared
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cloudflared-service
+  template:
+    metadata:
+      labels:
+        app: cloudflared-service
+    spec:
+      containers:
+        - name: cloudflared
+          image: cloudflare/cloudflared:latest
+          command: ["cloudflared", "tunnel", "--no-autoupdate","run"]
+          envFrom:
+            - secretRef:
+                name: cloudflared-secret
