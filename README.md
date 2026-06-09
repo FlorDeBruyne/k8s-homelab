@@ -51,7 +51,7 @@ k8s-homelab/
         │   ├── celery/         # Celery worker + beat scheduler
         │   ├── flower/         # Celery monitoring dashboard
         │   └── frontend/       # Open Wearables React dashboard
-        └── ai-agent/           # AI coaching agent (namespace: fitness-coach) [WIP]
+        └── ai-agent/           # AI coaching agent (namespace: ait-agent) [WIP]
 ```
 
 ## Prerequisites
