@@ -13,17 +13,18 @@ GitOps-managed Kubernetes homelab cluster running on bare-metal HP ProDesk machi
 
 ## Stack
 
-| Component             | Purpose                        |
-|-----------------------|-------------------------------|
-| Kubernetes 1.32       | Container orchestration        |
-| Cilium                | CNI (VXLAN mode)               |
-| Longhorn              | Distributed block storage      |
-| ingress-nginx         | Ingress controller             |
-| FluxCD v2             | GitOps continuous delivery     |
-| CloudNativePG         | PostgreSQL operator            |
-| kube-prometheus-stack | Metrics, alerting, dashboards  |
-| metrics-server        | Resource metrics (CPU/MEM)     |
-| SOPS + Age            | Secrets encryption             |
+| Component             | Purpose                                        |
+|-----------------------|------------------------------------------------|
+| Kubernetes 1.32       | Container orchestration                        |
+| Cilium                | CNI (VXLAN mode)                               |
+| Longhorn              | Distributed block storage                      |
+| ingress-nginx         | Ingress controller                             |
+| FluxCD v2             | GitOps continuous delivery                     |
+| CloudNativePG         | PostgreSQL operator                            |
+| kube-prometheus-stack | Metrics, alerting, dashboards                  |
+| metrics-server        | Resource metrics (CPU/MEM)                     |
+| SOPS + Age            | Secrets encryption                             |
+| Cloudflare Tunnel     | External access via ai-fitness-coach.be        |
 
 ## Repository Structure
 
@@ -34,6 +35,7 @@ k8s-homelab/
 │   └── flux-system/            # FluxCD self-management + SOPS patch
 ├── infrastructure/             # Core cluster dependencies
 │   ├── cloudnative-pg/         # PostgreSQL operator (cluster-wide)
+│   ├── cloudflared/            # Cloudflare tunnel (external access)
 │   ├── longhorn/               # Distributed block storage (~1TB per node)
 │   ├── ingress-nginx/          # Ingress controller (NodePort 30080/30443)
 │   └── metrics-server/         # Resource metrics
@@ -44,7 +46,7 @@ k8s-homelab/
         ├── open-wearables/     # Wearable data platform (namespace: open-wearables)
         │   ├── postgres/       # PostgreSQL cluster via CloudNativePG
         │   ├── redis/          # Redis message broker
-        │   ├── svix/           # Webhook delivery service
+        │   ├── svix/           # Webhook delivery
         │   ├── backend/        # Open Wearables FastAPI backend
         │   ├── celery/         # Celery worker + beat scheduler
         │   ├── flower/         # Celery monitoring dashboard
@@ -98,15 +100,35 @@ SOPS will decrypt, open your `$EDITOR`, and re-encrypt on save. Never commit une
 
 ## Accessing Services
 
-| Service            | URL                                          |
-|--------------------|----------------------------------------------|
-| Longhorn UI        | http://longhorn.homelab.local:30080          |
-| Grafana            | http://grafana.homelab.local:30080           |
-| Open Wearables     | http://open-wearables.homelab.local:30080    |
-| Open Wearables API | http://api.open-wearables.homelab.local:30080|
+### External (via Cloudflare Tunnel)
+
+| Service            | URL                              |
+|--------------------|----------------------------------|
+| Open Wearables UI  | https://ai-fitness-coach.be      |
+| Open Wearables API | https://api.ai-fitness-coach.be  |
+
+### Internal (via Pi-hole local DNS)
+
+| Service            | URL                                           |
+|--------------------|-----------------------------------------------|
+| Longhorn UI        | http://longhorn.homelab.local:30080           |
+| Grafana            | http://grafana.homelab.local:30080            |
+| Open Wearables UI  | http://open-wearables.homelab.local:30080     |
+| Open Wearables API | http://api.open-wearables.homelab.local:30080 |
 | Flower (Celery)    | http://flower.open-wearables.homelab.local:30080 |
 
-> DNS records are managed via Pi-hole local DNS. Ingress runs on NodePort 30080.
+> Internal DNS records are managed via Pi-hole. Ingress runs on NodePort 30080.
+
+## External Access
+
+External traffic is routed via a Cloudflare Tunnel (`cloudflared`) running in the `cloudflared-system` namespace. The tunnel connects outbound to Cloudflare's edge — no open ports on the home network are required.
+
+Traffic flow:
+```
+Internet → Cloudflare Edge → cloudflared pod → ingress-nginx → service
+```
+
+The tunnel token is stored as a SOPS-encrypted secret (`cloudflared-secret`) and injected as `TUNNEL_TOKEN` into the cloudflared deployment. Tunnel routes are configured via the Cloudflare Zero Trust dashboard.
 
 ## Apps
 
