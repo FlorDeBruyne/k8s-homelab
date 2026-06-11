@@ -1,0 +1,11 @@
+---
+apiVersion: postgresql.cnpg.io/v1
+kind: Database
+metadata:
+  name: memory-db
+  namespace: ai-agent
+spec:
+  name: memory
+  owner: ai-agent
+  cluster:
+    name: postgres-cluster

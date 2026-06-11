@@ -1,0 +1,21 @@
+---
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: postgres-cluster
+  namespace: ai-agent
+spec:
+  instances: 1
+  storage:
+    storageClass: longhorn
+    size: 25Gi
+  bootstrap:
+    initdb:
+      database: ai-agent
+      owner: ai-agent
+      secret:
+        name: ai-agent-secret
+      postInitApplicationSQLRefs:
+        configMapRefs:
+          - name: init-sql
+            key: init.sql
