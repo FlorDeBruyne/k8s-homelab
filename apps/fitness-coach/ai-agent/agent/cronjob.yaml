@@ -1,0 +1,22 @@
+---
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: agent-cron
+  namespace: ai-agent
+spec:
+  schedule: "0 8 * * *" #	Run every morning at 8am
+  timeZone: "Europe/Brussels"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+            - name: agent-cron
+              image: ghcr.io/flordebruyne/fitness-coach-agent:latest
+              imagePullPolicy: Always
+              command: [ "/bin/sh", "-c", "scripts/start/agent.sh" ]
+              envFrom:
+                - secretRef:
+                    name: ai-agent-secret
+          restartPolicy: OnFailure
