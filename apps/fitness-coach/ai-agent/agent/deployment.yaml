@@ -16,6 +16,14 @@ spec:
       labels:
         app: agent-service
     spec:
+      initContainers:
+        - name: alembic-migrate
+          image: ghcr.io/flordebruyne/fitness-coach-agent:latest
+          imagePullPolicy: Always
+          command: [ "alembic", "upgrade", "head" ]
+          envFrom:
+            - secretRef:
+                name: ai-agent-secret
       containers:
         - name: agent
           image: ghcr.io/flordebruyne/fitness-coach-agent:latest
