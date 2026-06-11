@@ -15,7 +15,3 @@ spec:
       owner: ai-agent
       secret:
         name: ai-agent-secret
-      postInitApplicationSQLRefs:
-        configMapRefs:
-          - name: init-sql
-            key: init.sql
