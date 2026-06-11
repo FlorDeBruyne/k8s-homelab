@@ -6,3 +6,4 @@ resources:
   - secrets.sops.yaml
   - agent/
   - telegram-bot/
+  - memory/
