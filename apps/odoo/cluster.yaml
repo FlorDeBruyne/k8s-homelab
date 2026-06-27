@@ -1,0 +1,17 @@
+---
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: postgres-cluster
+  namespace: odoo
+spec:
+  instances: 1
+  storage:
+    storageClass: longhorn
+    size: 20Gi
+  bootstrap:
+    initdb:
+      database: odoo
+      owner: odoo
+      secret:
+        name: odoo-secrets
