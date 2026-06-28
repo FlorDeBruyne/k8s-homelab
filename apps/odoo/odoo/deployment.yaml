@@ -1,0 +1,81 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: odoo
+  namespace: odoo
+  labels:
+    app: odoo
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: odoo
+  template:
+    metadata:
+      labels:
+        app: odoo
+    spec:
+      securityContext:
+        fsGroup: 101
+      initContainers:
+        - name: odoo-init
+          image: odoo:19.0
+          args: ["odoo", "-i", "base", "-d", "odoo", "--stop-after-init"]
+          env:
+            - name: PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: odoo-secrets
+                  key: password
+          volumeMounts:
+            - name: config
+              mountPath: /etc/odoo
+              readOnly: true
+            - name: filestore
+              mountPath: /var/lib/odoo
+      containers:
+        - name: odoo
+          image: odoo:19.0
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: http
+              containerPort: 8069
+          env:
+            - name: PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: odoo-secrets
+                  key: password
+          volumeMounts:
+            - name: config
+              mountPath: /etc/odoo
+              readOnly: true
+            - name: filestore
+              mountPath: /var/lib/odoo
+          resources:
+            requests:
+              cpu: 250m
+              memory: 512Mi
+            limits:
+              memory: 2Gi
+          readinessProbe:
+            tcpSocket:
+              port: 8069
+            initialDelaySeconds: 15
+            periodSeconds: 10
+          livenessProbe:
+            tcpSocket:
+              port: 8069
+            initialDelaySeconds: 60
+            periodSeconds: 30
+      volumes:
+        - name: config
+          secret:
+            secretName: odoo-config
+            defaultMode: 0440
+        - name: filestore
+          persistentVolumeClaim:
+            claimName: odoo-filestore
