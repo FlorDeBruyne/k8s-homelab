@@ -1,0 +1,28 @@
+apiVersion: v1
+kind: Secret
+metadata:
+    name: odoo-config
+    namespace: odoo
+type: Opaque
+stringData:
+    odoo.conf: ENC[AES256_GCM,data:tG6r9CASyugHFPsKca4+HR61t/b1FrnGR/NQrRlcxyZtyOsALV4+mGV9CwoAn6oht/rvJAjDpItg7QQRhpc96Yh1/TSt9GCt0j90oIGhulXI0B8iL8bSLxsJdFUvlfX8QIjMDcVC9M2Zu3r1i9r5MZ+K8WFETQ6hwcUog9/apiPJc5JoF6sJcbpi6f8ZDmPPCO6w73TZCZaOgQi93fvJWFL3HnPAQkZQU5zsoh5oAtaquPutiBsgduhcHM7iasAw8zD+iOj4v+5GA4E1PGxg32zVFWf4mFCLz9y7AgbIIAJ2Tog0Tq11N2DVe8Q61uN8wQiGk1hH8i4=,iv:NTfdguPdc4kPuQjXWQnUeZBycNK3QHUSkdjrWVmwH7A=,tag:klv/dbOO6x6V2Re/dUeOhg==,type:str]
+sops:
+    kms: []
+    gcp_kms: []
+    azure_kv: []
+    hc_vault: []
+    age:
+        - recipient: age1mth59q66qy6rz92u4x4jfhngrq0m8t4sy9xtmrhjs3c8c3n2p3ws93qfq0
+          enc: |
+            -----BEGIN AGE ENCRYPTED FILE-----
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBmejhObUlhK0lSY1owcVY4
+            OEFrL3o1V0pLbVUySGF4NUNib0F2WGVKOVNrCkdhTkpLV0U3YURDbmY4eUR2M21k
+            d2R0anFPMXJMQjNMYXp6cWhRMW9nejgKLS0tIDA1LzRPWTd5Z0V0UEkzNzNFeXA3
+            TVZQaHdrUUNVRS91WlAzcWYwY0l3blEKaTr5GGChiVqGme+12QIULGfFyHravEEx
+            g67wCBv9CimNmQACN28r5Rfv9mKCWcfHlsvWJt+77bNgKAP9MUxguA==
+            -----END AGE ENCRYPTED FILE-----
+    lastmodified: "2026-06-28T11:01:11Z"
+    mac: ENC[AES256_GCM,data:V6vEXB7I+VYjfT4Q5NukSQNBU2IKf6gyiKLlYfXU953xec1tE7adQdGYzPnSepVEFK9VXiFMJdp7EEwP7nRvhPZc0Ho3bbnoboxaVAzDIPAdL2ZjLFwpU/ql6FRrymq7QvFqKbADLC6Hi56iuxKRcFZaQWnnO/SINCPsBxNRlmw=,iv:/bwVClwgIHxy2DuMuK2JnVWQN/W/ml75+gzuLyK5RSA=,tag:+DWwn0FPMgPQxztqMAerzQ==,type:str]
+    pgp: []
+    encrypted_regex: ^(data|stringData)$
+    version: 3.9.4
