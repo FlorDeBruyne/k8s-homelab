@@ -19,9 +19,9 @@ spec:
   values:
     postgresql:
       enabled: false
-      secret:
-        create: false
-        name: prefect-postgres-secrets
+    secret:
+      create: false
+      name: prefect-postgres-secrets
     server:
       uiConfig:
         prefectUiApiUrl: http://prefect.homelab.local:30080/api
