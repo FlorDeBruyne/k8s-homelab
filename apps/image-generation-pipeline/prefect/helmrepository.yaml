@@ -1,0 +1,9 @@
+---
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: HelmRepository
+metadata:
+  name: prefect-repo
+  namespace: prefect
+spec:
+  url: https://prefecthq.github.io/prefect-helm
+  interval: 1h
