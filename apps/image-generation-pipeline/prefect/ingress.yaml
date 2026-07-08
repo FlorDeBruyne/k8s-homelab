@@ -2,7 +2,7 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: prefect-ingress
-  namespace: prefect
+  namespace: image-generation-pipeline
 spec:
   ingressClassName: nginx
   rules:
