@@ -21,7 +21,7 @@ spec:
       enabled: false
     secret:
       create: false
-      name: prefect-postgres-secrets
+      name: image-generation-pipeline-secrets
     server:
       uiConfig:
         prefectUiApiUrl: http://prefect.homelab.local:30080/api
