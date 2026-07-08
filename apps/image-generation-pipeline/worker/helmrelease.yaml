@@ -21,7 +21,7 @@ spec:
     worker:
       apiConfig: selfHostedServer
       selfHostedServerApiConfig:
-        apiUrl: http://prefect-server.prefect.svc.cluster.local:4200/api
+        apiUrl: http://prefect-server.image-generation-pipeline.svc.cluster.local:4200/api
       config:
         workPool: default-pool
         type: kubernetes
