@@ -16,3 +16,13 @@ spec:
                 name: prefect-server
                 port:
                   number: 4200
+    - host: hprodesk02.100.107.177.3.ts.net
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: prefect-server
+                port:
+                  number: 4200
