@@ -1,0 +1,29 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: minio-console-ingress
+  namespace: minio
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: minio.homelab.local
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: minio-release-console
+                port:
+                  number: 9001
+    - host: hpprodesk02.tail26593d.ts.net
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: minio-release-console
+                port:
+                  number: 9001

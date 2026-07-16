@@ -1,0 +1,9 @@
+---
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: HelmRepository
+metadata:
+  name: minio-repo
+  namespace: minio
+spec:
+  url: https://charts.min.io/
+  interval: 1h
