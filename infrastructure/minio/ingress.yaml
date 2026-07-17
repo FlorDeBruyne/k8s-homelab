@@ -17,6 +17,16 @@ spec:
                 name: minio-release-console
                 port:
                   number: 9001
+    - host: minio-api.homelab.local
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: minio-release
+                port:
+                  number: 9000
     - host: hpprodesk02.tail26593d.ts.net
       http:
         paths:
