@@ -1,0 +1,9 @@
+---
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: HelmRepository
+metadata:
+  name: qdrant-repo
+  namespace: qdrant
+spec:
+  url: https://qdrant.github.io/qdrant-helm
+  interval: 1h

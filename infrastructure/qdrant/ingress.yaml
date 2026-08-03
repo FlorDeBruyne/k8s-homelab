@@ -2,37 +2,27 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: minio-console-ingress
-  namespace: minio
+  name: qdrant-ingress
+  namespace: qdrant
 spec:
   ingressClassName: nginx
   rules:
-    - host: minio.homelab.local
+    - host: qdrant.homelab.local
       http:
         paths:
           - path: /
             pathType: Prefix
             backend:
               service:
-                name: minio-release-console
+                name: qdrant-release
                 port:
-                  number: 9001
-    - host: minio-api.homelab.local
-      http:
-        paths:
-          - path: /
-            pathType: Prefix
-            backend:
-              service:
-                name: minio-release
-                port:
-                  number: 9000
+                  number: 6333
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: minio-tailscale-ingress
-  namespace: minio
+  name: qdrant-tailscale-ingress
+  namespace: qdrant
   annotations:
     nginx.ingress.kubernetes.io/use-regex: "true"
     nginx.ingress.kubernetes.io/rewrite-target: /$2
@@ -42,10 +32,10 @@ spec:
     - host: hpprodesk02.tail26593d.ts.net
       http:
         paths:
-          - path: /minio(/|$)(.*)
+          - path: /qdrant(/|$)(.*)
             pathType: ImplementationSpecific
             backend:
               service:
-                name: minio-release-console
+                name: qdrant-release
                 port:
-                  number: 9001
+                  number: 6333
