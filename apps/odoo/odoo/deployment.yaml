@@ -23,6 +23,7 @@ spec:
       initContainers:
         - name: odoo-init
           image: odoo:19.0
+          imagePullPolicy: Always
           args: ["odoo", "-i", "base", "-d", "odoo", "--stop-after-init"]
           env:
             - name: PASSWORD
@@ -39,7 +40,7 @@ spec:
       containers:
         - name: odoo
           image: odoo:19.0
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           ports:
             - name: http
               containerPort: 8069
