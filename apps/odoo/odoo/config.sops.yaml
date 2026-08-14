@@ -5,7 +5,7 @@ metadata:
     namespace: odoo
 type: Opaque
 stringData:
-    odoo.conf: ENC[AES256_GCM,data:+pDQFYXcUIj+8UY7Y6Sk1GinUQKMjVFVctUcrWWui8RBnB8cSRaTQr6ZDdDv9KYsBKR7m0UwKKl17c2KASqyCFSFY1CfInXlctM1eI0Hq09SCJuVVbzx3QDdTCwXaslKVJh6MxOx2bUKzF0ZKrUpyici0TCmClwDF7a0gUVjiG1ddj/pGr7sENg4eSQ9SiPy0z602xa3ciRtIfpdfvu6n3ub7rDjj6sWZL9RjQq1awzfO4aAPyPPiIF9A3sUIN1o4wnk237X1fKXIPAN7AtonG6Mv8sigpvNsGFYKjFCXs4CGe2tgYkgTiDw/PBNRy4K793R,iv:ra3e/av+BYi6vq96FYBxghuFfjhAvqpb1zPSEYpPZic=,tag:94q3A4ScfvRZIVSTF/NmrQ==,type:str]
+    odoo.conf: ENC[AES256_GCM,data:yioLQRjvp90uCo8FoASr+uEwthMRM381wFFLSLxNowjESufDyrWP9P1lQnSui16MsA8lNHNByInOek/nvHfE//dq2H0h4JF1L0DCKF3KBAPt5AsVDlsQSUjEcp8UHccQZiXtx5y+lYpZo1GcFaNQnH8aS4O0W3sJybcVuO2/BS6EcNA/scmhZLs4XxxMuzkj3egh8KRv64xtHNxdFcSk7QkS+lPDgzTLJRW9NXL1pRimLu6JegghNit6+2Xp+z5YmyVtbS+HOw2feCNvr5kVkMqhbBgEoobK/s65Ozpvunb6lX3/J5Pd4Lc5jHet8OsUXVjd9w==,iv:VNiQkBCJdUgm/GSI6eIN/5xAVRB8Fq3FQ3dh+fDli7c=,tag:0nHcj+28L2+wBCzZMc+oWw==,type:str]
 sops:
     kms: []
     gcp_kms: []
@@ -21,8 +21,8 @@ sops:
             TVZQaHdrUUNVRS91WlAzcWYwY0l3blEKaTr5GGChiVqGme+12QIULGfFyHravEEx
             g67wCBv9CimNmQACN28r5Rfv9mKCWcfHlsvWJt+77bNgKAP9MUxguA==
             -----END AGE ENCRYPTED FILE-----
-    lastmodified: "2026-06-28T12:00:38Z"
-    mac: ENC[AES256_GCM,data:LE3Ptb2etEW2Om0Z80JCD645BtOe2jP9+HifUSx58BULl1rzrHU0I+qedBWD9wulr02is+GE4nu8WkLOmE7iAv3k/0h20KkjORmGxQqYZIl3ukTooBtKS2HsCJPhJnmj+Efanw1pFTmUBR0Qha3SxX6QobtwGww3VRdjcGS1Iiw=,iv:/U18NwHL3JP292E/9PuM197csv3yOcyB4myxFxl6LZo=,tag:6Kt5vGHRIsWCC6m0lZYizA==,type:str]
+    lastmodified: "2026-08-14T20:19:24Z"
+    mac: ENC[AES256_GCM,data:3NWZ/3K4fhqtiwkuchFwJsEIc+T4t1urWV6LR6Es95FbXItXej3zv8IEU/CYAkWx/i6mp5JeuqGAs/P6jsawoZ0l+nffqFTL8XvyofmhgkV6VGDSmrqdqzNTqD+ztxSMTsOpWwaRL2HiAbq+xG8/3qCBlkUnXuqS5VZUQnrrhSg=,iv:Ra68EyMFIpG584QyIA2BSSAAyQbyHDZJkJQJ4fUJiLw=,tag:kBV3DDFT0x3PHPECzctvww==,type:str]
     pgp: []
     encrypted_regex: ^(data|stringData)$
     version: 3.9.4
