@@ -1,0 +1,64 @@
+---
+# Self-hosted GitHub Actions runner, running inside the cluster it deploys
+# to - avoids exporting a kubeconfig as a GitHub secret entirely: the
+# runner's pod ServiceAccount (bound to per-app Roles, see e.g.
+# apps/localizer/rbac.yaml) is what a workflow's `kubectl` calls use, via
+# the standard in-cluster service account token/CA mounted at
+# /var/run/secrets/kubernetes.io/serviceaccount/.
+#
+# Repo-scoped (RUNNER_SCOPE=repo) to github.com/FlorDeBruyne/localizer for
+# now. If more apps want the same pattern later, either point another
+# runner Deployment at their repo, or switch this one to an org-level
+# runner with the LABELS below used to target it from each repo's workflow.
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: localizer-runner
+  namespace: github-runners
+  labels:
+    app: localizer-runner
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: localizer-runner
+  template:
+    metadata:
+      labels:
+        app: localizer-runner
+    spec:
+      serviceAccountName: github-runner
+      containers:
+        - name: runner
+          image: myoung34/github-runner:latest
+          env:
+            - name: REPO_URL
+              value: https://github.com/FlorDeBruyne/localizer
+            - name: RUNNER_NAME_PREFIX
+              value: localizer-k8s
+            - name: RUNNER_SCOPE
+              value: repo
+            - name: LABELS
+              value: self-hosted,localizer-k8s
+            - name: RUNNER_WORKDIR
+              value: /tmp/runner/work
+            - name: DISABLE_RUNNER_UPDATE
+              value: "true"
+            - name: ACCESS_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: github-runner-pat
+                  key: ACCESS_TOKEN
+          volumeMounts:
+            - name: work
+              mountPath: /tmp/runner/work
+          resources:
+            requests:
+              cpu: 250m
+              memory: 256Mi
+            limits:
+              cpu: "1"
+              memory: 1Gi
+      volumes:
+        - name: work
+          emptyDir: {}

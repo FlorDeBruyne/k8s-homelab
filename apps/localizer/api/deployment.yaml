@@ -1,0 +1,59 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: localizer-api
+  namespace: localizer
+  labels:
+    app: localizer-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: localizer-api
+  template:
+    metadata:
+      labels:
+        app: localizer-api
+    spec:
+      containers:
+        - name: api
+          # Built/pushed by the localizer repo's own CI on push to main -
+          # imagePullPolicy Always + a `kubectl rollout restart` from that
+          # workflow (see .github/workflows/deploy-api.yml there) is what
+          # actually picks up a new build, same convention as open-wearables.
+          image: ghcr.io/flordebruyne/localizer-api:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8000
+              protocol: TCP
+          env:
+            - name: POSTGRES_HOST
+              value: postgres-cluster-rw.localizer.svc.cluster.local
+            - name: POSTGRES_PORT
+              value: "5432"
+            - name: POSTGRES_DB
+              value: real_estate
+            - name: POSTGRES_USER
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-auth
+                  key: username
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-auth
+                  key: password
+            # Shared cluster-wide MinIO (infrastructure/minio), cross-namespace.
+            - name: MINIO_ENDPOINT
+              value: minio-release.minio.svc.cluster.local:9000
+          envFrom:
+            - secretRef:
+                name: api-secret
+          resources:
+            requests:
+              cpu: 100m
+              memory: 128Mi
+            limits:
+              cpu: "1"
+              memory: 512Mi

@@ -1,0 +1,27 @@
+---
+# PostGIS-enabled Postgres for Localizer (src/api/ + the scraper pipeline in
+# the separate `localizer` repo need PostGIS for listing geocoding). Uses
+# CloudNativePG's official PostGIS operand image rather than the default
+# plain-Postgres one - see https://github.com/cloudnative-pg/postgis-containers.
+# Sized small on purpose: the real prod database is ~175MB today (see
+# apps/localizer/README notes) - 10Gi leaves plenty of headroom without
+# over-provisioning Longhorn storage that another app might need.
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: postgres-cluster
+  namespace: localizer
+spec:
+  instances: 1
+  imageName: ghcr.io/cloudnative-pg/postgis:17.6-3.6.2-system-trixie
+  storage:
+    storageClass: longhorn
+    size: 10Gi
+  bootstrap:
+    initdb:
+      database: real_estate
+      owner: propinsight
+      secret:
+        name: postgres-auth
+      postInitSQL:
+        - CREATE EXTENSION IF NOT EXISTS postgis
