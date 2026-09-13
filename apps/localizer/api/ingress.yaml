@@ -1,0 +1,34 @@
+---
+# The api.localizer.be rule below is inert until the Cloudflare Tunnel
+# Public Hostname for that domain is moved (in the Cloudflare Zero Trust
+# dashboard) from the laptop's tunnel to this cluster's cloudflared tunnel
+# (infrastructure/cloudflared) - see apps/localizer/README.md. Until then,
+# only the internal homelab.local host is actually reachable.
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: localizer-api-ingress
+  namespace: localizer
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: api.localizer.homelab.local
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: localizer-api-service
+                port:
+                  number: 8000
+    - host: api.localizer.be
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: localizer-api-service
+                port:
+                  number: 8000

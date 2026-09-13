@@ -37,6 +37,18 @@ spec:
       - name: vlam-dataset
         policy: none
         purge: false
+      # Localizer's listing images. Must be named exactly "images" - every
+      # existing listing_images.storage_path value in the database is
+      # literally "images/<object key>" (src/database/storing/minio_client.py's
+      # default bucket_name), and src/api/storage.py splits the bucket name
+      # back out of that column at request time rather than taking it from
+      # config - a different bucket name here would 404 every listing photo.
+      # Temporary home on Longhorn - TODO once the TrueNAS box is racked,
+      # move this bucket's storage there and drop it from this shared
+      # instance (see docs/TODO.md in the localizer repo).
+      - name: images
+        policy: none
+        purge: false
 
     consoleService:
       type: ClusterIP
